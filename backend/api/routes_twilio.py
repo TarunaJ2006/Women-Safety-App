@@ -1,11 +1,9 @@
-"""
-Twilio API routes for the Women Safety App
-"""
 from fastapi import APIRouter
+from services.twilio_service import send_emergency_alert
 
-router = APIRouter(prefix="/twilio", tags=["twilio"])
+router = APIRouter(prefix="/twilio", tags=["Twilio"])
 
-@router.post("/send-sos")
-async def send_sos():
-    """Send SOS message via Twilio"""
-    return {"message": "SOS message sent"}
+@router.post("/alert")
+async def send_alert(number: str, message: str):
+    """Send an emergency alert message"""
+    return send_emergency_alert(number, message)

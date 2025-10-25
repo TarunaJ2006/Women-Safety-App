@@ -1,14 +1,23 @@
-import { useEffect, useState } from "react";
+// src/hooks/useLocation.js
+import { useState, useEffect } from "react";
 
-export default function useLocation() {
-  const [coords, setCoords] = useState(null);
+export const useLocation = () => {
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => setCoords(pos.coords),
-      (err) => console.error(err)
-    );
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setLocation({
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+          });
+        },
+        (err) => console.error("GPS error:", err),
+        { enableHighAccuracy: true }
+      );
+    }
   }, []);
 
-  return coords;
-}
+  return location;
+};

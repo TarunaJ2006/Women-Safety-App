@@ -1,0 +1,94 @@
+.
+├── LICENSE
+├── README.md
+├── assets
+│   ├── audio_readme.md
+│   ├── icons
+│   └── sounds
+├── backend
+│   ├── __init__.py
+│   ├── ai_models
+│   ├── api
+│   │   ├── __init__.py
+│   │   ├── routes_audio.py
+│   │   ├── routes_emergency.py
+│   │   ├── routes_twilio.py
+│   │   └── routes_vision.py
+│   ├── core
+│   │   └── decision_engine.py
+│   ├── emergency
+│   │   └── emergency_system.py
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── audio_service.py
+│   │   ├── location_service.py
+│   │   ├── twilio_service.py
+│   │   └── vision_service.py
+│   ├── tests
+│   │   └── test_endpoints.py
+│   ├── utils
+│   │   └── helpers.py
+│   └── vision
+│       ├── crowd_detector.py
+│       └── tempCodeRunnerFile.py
+├── docker-compose.yml
+├── docs
+│   ├── INTEGRATION_PLAN.md
+│   ├── SETUP_INSTRUCTIONS.md
+│   ├── WOMEN_SAFETY_APP_BLUEPRINT.md
+│   └── report.md
+├── file.txt
+├── frontend
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── assets
+│   │   │   ├── icons
+│   │   │   ├── react.svg
+│   │   │   └── sounds
+│   │   ├── components
+│   │   │   ├── SOSButton.jsx
+│   │   │   ├── StatusCard.jsx
+│   │   │   ├── SystemPanel.jsx
+│   │   │   ├── ThreatIndicator.jsx
+│   │   │   └── TopBar.jsx
+│   │   ├── hooks
+│   │   │   ├── useAudioStatus.js
+│   │   │   ├── useLocation.js
+│   │   │   ├── useSafetyData.js
+│   │   │   └── useVisionStatus.js
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   ├── pages
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Emergency.jsx
+│   │   │   └── Settings.jsx
+│   │   ├── services
+│   │   │   ├── api.js
+│   │   │   └── twilio.js
+│   │   └── styles
+│   │       ├── dashboard.css
+│   │       ├── emergency.css
+│   │       └── settings.css
+│   └── vite.config.js
+├── models
+│   ├── yolov8n-pose.pt
+│   └── yolov8n.pt
+├── scripts
+│   ├── activate.sh
+│   ├── setup_linux.sh
+│   ├── setup_mac.sh
+│   ├── setup_windows.bat
+│   └── ui.sh
+└── snapshots
+
+28 directories, 64 files
