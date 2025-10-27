@@ -1,35 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { getAudioStatus } from "../services/api";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useSafetyData } from "../hooks/useSafetyData";
 
 export default function Dashboard() {
-  const [emotion, setEmotion] = useState("Neutral");
-  const [confidence, setConfidence] = useState(0);
-  const [threatLevel, setThreatLevel] = useState("LOW");
+  const navigate = useNavigate();
+  const { emotion, confidence, visionData, threatData, location } = useSafetyData();
 
-  // Fetch backend emotion data periodically
-  useEffect(() => {
-    const fetchAudioStatus = async () => {
-      const data = await getAudioStatus();
-      setEmotion(data.emotion || "Neutral");
-      setConfidence(data.confidence || 0);
-    };
-
-    fetchAudioStatus();
-    const interval = setInterval(fetchAudioStatus, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Determine threat level automatically
-  useEffect(() => {
-    const highRiskEmotions = ["Angry", "Fearful", "Sad"];
-    if (confidence > 0.8 && highRiskEmotions.includes(emotion)) {
-      setThreatLevel("HIGH");
-    } else if (confidence > 0.6 && emotion !== "Neutral") {
-      setThreatLevel("MEDIUM");
-    } else {
-      setThreatLevel("LOW");
-    }
-  }, [emotion, confidence]);
+  const threatLevel = threatData.threat_level || "LOW";
 
   // Dynamic colors + emojis
   const threatColor =
@@ -68,9 +45,9 @@ export default function Dashboard() {
       {/* STATUS CARD */}
       <div className="w-full max-w-3xl bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
         <div className="flex justify-between mb-4">
-          <p>🎯 <strong>Current Status:</strong> SECURE</p>
-          <p>📍 <strong>Location:</strong> Downtown Mall</p>
-          <p>⏰ <strong>Active Since:</strong> 14:32</p>
+          <p>🎯 <strong>Current Status:</strong> {threatLevel === "LOW" ? "SECURE" : "ALERT"}</p>
+          <p>📍 <strong>Location:</strong> {location.loading ? "Loading..." : location.error ? "Unavailable" : `${location.lat?.toFixed(4)}, ${location.lon?.toFixed(4)}`}</p>
+          <p>⏰ <strong>Threat Score:</strong> {threatData.threat_score?.toFixed(2) || "0.00"}</p>
         </div>
       </div>
 
@@ -79,10 +56,10 @@ export default function Dashboard() {
         {/* Vision System */}
         <div className="bg-gray-800 rounded-2xl shadow-lg p-5">
           <h2 className="text-lg font-semibold mb-2">📹 Vision System</h2>
-          <p>People: 3</p>
-          <p>Risk: LOW</p>
-          <p>Motion: Normal</p>
-          <p>Pose: Safe</p>
+          <p>People: {visionData.people_count || 0}</p>
+          <p>Risk: {visionData.risk_level || "LOW"}</p>
+          <p>Crowd: {visionData.is_crowded ? "Yes" : "No"}</p>
+          <p>Status: {visionData.active ? "Active" : "Inactive"}</p>
         </div>
 
         {/* Audio System */}
@@ -111,7 +88,7 @@ export default function Dashboard() {
       <div className="flex gap-6 mt-6">
         <button
           className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-xl text-lg font-bold shadow-md"
-          onClick={() => alert("🚨 Emergency Triggered!")}
+          onClick={() => navigate("/emergency")}
         >
           🔴 EMERGENCY
         </button>

@@ -1,11 +1,1 @@
-import React from "react";
-
-export default function StatusCard({ status, location, time }) {
-  return (
-    <div className="status-card">
-      <p>🎯 CURRENT STATUS: <strong>{status}</strong></p>
-      <p>📍 Location: {location}</p>
-      <p>⏰ Active Since: {time}</p>
-    </div>
-  );
-}
+import React from \"react\";\nimport './StatusCard.css';\n\nexport default function StatusCard({ \n  status = \"Safe\", \n  location = \"Unknown\", \n  time = new Date().toLocaleTimeString(),\n  title = \"System Status\",\n  icon = \"\ud83d\udd12\",\n  description = \"\",\n  variant = \"safe\"\n}) {\n  const getStatusVariant = () => {\n    const statusLower = status.toLowerCase();\n    if (statusLower.includes('danger') || statusLower.includes('emergency')) return 'danger';\n    if (statusLower.includes('warning') || statusLower.includes('alert')) return 'warning';\n    return 'safe';\n  };\n  \n  const statusVariant = variant || getStatusVariant();\n  \n  return (\n    <div className={`status-card status-card-${statusVariant}`}>\n      <div className=\"status-card-header\">\n        <div className=\"status-card-info\">\n          <div className=\"status-card-title\">{title}</div>\n          <div className=\"status-card-value\">{status}</div>\n        </div>\n        <div className=\"status-card-icon\">{icon}</div>\n      </div>\n      \n      <div className=\"status-card-body\">\n        {description && (\n          <p className=\"status-card-description\">{description}</p>\n        )}\n        \n        <div className=\"status-card-meta\">\n          <div className=\"status-card-meta-item\">\n            <span>\ud83d\udccd</span>\n            <span>Location: <strong>{location}</strong></span>\n          </div>\n          <div className=\"status-card-meta-item\">\n            <span>\u23f0</span>\n            <span>Active Since: <strong>{time}</strong></span>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}

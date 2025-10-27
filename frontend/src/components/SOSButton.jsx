@@ -1,30 +1,46 @@
 // src/components/SOSButton.jsx
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './SOSButton.css';
 
-export default function SOSButton({ label, danger }) {
+export default function SOSButton({ label = "SOS", danger = true, onActivate }) {
   const nav = useNavigate();
+  const [isActive, setIsActive] = useState(false);
 
   const handleClick = () => {
-    if (label.includes("EMERGENCY")) {
+    setIsActive(true);
+    
+    if (label.includes("EMERGENCY") || label.includes("SOS")) {
+      // Trigger SOS
+      if (onActivate) {
+        onActivate();
+      }
       // Navigate to emergency screen
-      nav("/emergency");
+      setTimeout(() => {
+        nav("/emergency");
+      }, 300);
     } else {
-      alert("Report feature coming soon!");
+      setTimeout(() => setIsActive(false), 2000);
     }
   };
 
   return (
-    <button
-      onClick={handleClick}
-      style={{
-        background: danger ? "red" : "#facc15",
-        color: "white",
-        margin: "5px",
-        fontSize: "16px",
-      }}
-    >
-      {label}
-    </button>
+    <div className="sos-button-container">
+      <button
+        onClick={handleClick}
+        className={`sos-button ${isActive ? 'active' : ''}`}
+        aria-label="Emergency SOS Button"
+      >
+        {isActive && (
+          <>
+            <div className="sos-ripple"></div>
+            <div className="sos-ripple"></div>
+            <div className="sos-ripple"></div>
+          </>
+        )}
+        <span className="sos-button-text">{label}</span>
+        <span className="sos-button-subtext">Press for Help</span>
+      </button>
+    </div>
   );
 }
