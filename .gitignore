@@ -180,6 +180,10 @@ data/
 datasets/
 *.csv
 *.json
+# Allow package files
+!package.json
+!package-lock.json
+!tsconfig.json
 *.pkl
 *.pickle
 *.hdf5
