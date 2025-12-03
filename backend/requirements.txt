@@ -1,0 +1,27 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+alembic>=1.13.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+email-validator
+python-multipart
+python-dotenv
+python-jose[cryptography]
+bcrypt
+requests
+numpy
+opencv-python-headless
+pillow
+typing_extensions
+soundfile
+librosa
+# AI Inference
+onnxruntime>=1.16.0
+transformers>=4.30.0
+optimum[onnxruntime]>=1.16.0
+ultralytics>=8.0.0
+# Testing
+pytest
+httpx

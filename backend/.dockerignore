@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+env/
+venv/
+*.log
+node_modules/
+*.sqlite3
+*.sqlite
+*.pt
+yolov8n-pose.pt
+yolov8n.pt
+.DS_Store
