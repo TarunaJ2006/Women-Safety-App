@@ -22,8 +22,16 @@ class AudioEngine(BaseInferenceEngine):
         self.id2label = {0: "angry", 1: "disgust", 2: "fearful", 3: "happy", 4: "neutral", 5: "sad", 6: "surprised"}
 
     def load_model(self, artifact_path: str = None) -> None:
+        from app.ai.model_downloader import ensure_audio_model
+        
         try:
             path = artifact_path or self.artifacts_dir
+            
+            # Ensure model is downloaded
+            if not ensure_audio_model(path):
+                logger.error("❌ Failed to prepare audio model")
+                return
+            
             logger.info(f"📁 Loading Audio AI from: {path}")
             self.feature_extractor = AutoFeatureExtractor.from_pretrained(path)
             self.session = ort.InferenceSession(

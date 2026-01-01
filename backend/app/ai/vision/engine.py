@@ -16,9 +16,21 @@ class VisionEngine(BaseInferenceEngine):
         }
 
     def load_model(self, artifact_path: str = None) -> None:
+        from app.ai.model_downloader import ensure_vision_models
+        import logging
+        logger = logging.getLogger(__name__)
+        
         path = artifact_path or self.artifacts_dir
+        
+        # Ensure models are downloaded
+        if not ensure_vision_models(path):
+            logger.error("❌ Failed to prepare vision models")
+            return
+        
+        logger.info(f"📁 Loading Vision models from {path}")
         self.model_people = YOLO(os.path.join(path, "yolov8n.onnx"), task="detect")
         self.model_pose = YOLO(os.path.join(path, "yolov8n-pose.onnx"), task="pose")
+        logger.info("✅ Vision models loaded successfully")
 
     def predict(self, frame: Any) -> Dict[str, Any]:
         if self.model_people is None: return {}

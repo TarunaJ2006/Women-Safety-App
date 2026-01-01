@@ -40,8 +40,26 @@ jobs:
       - name: Install frontend dependencies
         run: |
           cd frontend
-          npm ci
+          npm install
       - name: Build frontend
         run: |
           cd frontend
+          npm run build
+
+  responder-frontend:
+    name: Responder Frontend Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install responder dependencies
+        run: |
+          cd responder-frontend
+          npm install
+      - name: Build responder frontend
+        run: |
+          cd responder-frontend
           npm run build

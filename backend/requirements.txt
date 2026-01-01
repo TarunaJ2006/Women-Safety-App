@@ -25,3 +25,4 @@ ultralytics>=8.0.0
 # Testing
 pytest
 httpx
+huggingface_hub>=0.20.0
